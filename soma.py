@@ -4,17 +4,25 @@
 import numpy as np
 #from pads.Automata import RegExp, LookupNFA
 
-V = np.array([[0,0,0],[1,0,0],[0,0,1]])
-L = np.array([[0,0,0],[1,0,0],[0,0,1],[0,0,2]])
-T = np.array([[0,0,0],[0,0,1],[1,0,1],[0,0,2]])
-Z = np.array([[0,0,0],[0,0,1],[1,0,1],[1,0,2]])
-A = np.array([[0,0,0],[0,0,1],[0,1,0],[1,1,0]])
-B = np.array([[0,0,0],[0,1,0],[1,1,0],[1,1,1]])
-P = np.array([[0,0,0],[0,1,0],[1,1,0],[0,1,1]])
+# https://johnrausch.com/PuzzlingWorld/chap03.htm
+soma = dict(
+    V=np.array([[0,0,0],[1,0,0],[0,0,1]]),
+    L=np.array([[0,0,0],[1,0,0],[0,0,1],[0,0,2]]),
+    T=np.array([[0,0,0],[0,0,1],[1,0,1],[0,0,2]]),
+    Z=np.array([[0,0,0],[0,0,1],[1,0,1],[1,0,2]]),
+    A=np.array([[0,0,0],[0,0,1],[0,1,0],[1,1,0]]),
+    B=np.array([[0,0,0],[0,1,0],[1,1,0],[1,1,1]]),
+    P=np.array([[0,0,0],[0,1,0],[1,1,0],[0,1,1]]),
+)
 
-x = np.array([[1,0,0],[0,0,-1],[0,1,0]])
-y = np.array([[0,0,1],[0,1,0],[-1,0,0]])
-z = np.array([[0,-1,0],[1,0,0],[0,0,1]])
+mikusinski = dict(
+    A=np.array([[0,0,0],[1,0,0],[0,1,0],[0,2,0]]),
+    B=np.array([[0,0,0],[1,0,0],[0,1,0],[0,2,0],[1,0,1]]),
+    C=np.array([[0,0,0],[1,0,0],[0,1,0],[1,0,1]]),
+    D=np.array([[0,0,0],[1,0,0],[1,1,0],[0,0,1]]),
+    E=np.array([[0,0,0],[1,0,0],[2,0,0],[1,1,0],[0,0,1]]),
+    F=np.array([[1,0,0],[1,1,0],[0,1,0],[1,0,1],[2,0,1]]),
+)
 
 
 def to_set(points):
@@ -56,6 +64,9 @@ def make_all_rotations(points):
 
     :return:
     """
+    x = np.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]])
+    y = np.array([[0, 0, 1], [0, 1, 0], [-1, 0, 0]])
+    z = np.array([[0, -1, 0], [1, 0, 0], [0, 0, 1]])
     rotations = []
     p2 = None
     for i in range(6):
@@ -88,6 +99,11 @@ def to_regex(grid_points):
         s.append("1")
         m = n
     return "0* " + " ".join(s) + " 0*"
+
+
+def make_all_regex(points):
+    rotations = make_all_rotations(points)
+    return "|".join([to_regex(p) for p in rotations])
 
 
 # def regex_to_dfa(regex):

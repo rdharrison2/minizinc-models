@@ -1,5 +1,6 @@
 % Soma cube model (https://en.wikipedia.org/wiki/Soma_cube)
 % minizinc -s --all-solutions soma.mzn
+% minizinc -s -c soma.mzn && run-fzn-gecode-gist soma.fzn 
 
 include "globals.mzn";
 
