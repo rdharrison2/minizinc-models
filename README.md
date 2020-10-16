@@ -1,0 +1,2 @@
+# minizinc-models
+Minizinc models
